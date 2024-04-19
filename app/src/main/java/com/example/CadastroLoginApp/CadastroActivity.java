@@ -113,25 +113,40 @@ public class CadastroActivity extends AppCompatActivity {
 
     private boolean verificarCamposVazios(String nomeUsuario, String emailUsuario, String senhaUsuario, String confirmarSenhaUsuario) {
             if (nomeUsuario.isEmpty() || emailUsuario.isEmpty() || senhaUsuario.isEmpty() || confirmarSenhaUsuario.isEmpty()) {
-                StringBuilder mensagemErro = new StringBuilder("Os campos ");
+                StringBuilder mensagemErro = new StringBuilder();
+                int contadorCamposVazios = 0;
                 boolean estaVazio = true;
 
                 if (nomeUsuario.isEmpty()) {
                     mensagemErro.append("nome, ");
-                }
-                if (emailUsuario.isEmpty()) {
-                    mensagemErro.append("email, ");
-                }
-                if (senhaUsuario.isEmpty()) {
-                    mensagemErro.append("senha, ");
-                }
-                if (confirmarSenhaUsuario.isEmpty()) {
-                    mensagemErro.append("confirmar senha, ");
+                    contadorCamposVazios++;
                 }
 
-                // Remove a última vírgula e espaço e adiciona o ponto final
+                if (emailUsuario.isEmpty()) {
+                    mensagemErro.append("email, ");
+                    contadorCamposVazios++;
+                }
+
+                if (senhaUsuario.isEmpty()) {
+                    mensagemErro.append("senha, ");
+                    contadorCamposVazios++;
+                }
+
+                if (confirmarSenhaUsuario.isEmpty()) {
+                    mensagemErro.append("confirmar senha, ");
+                    contadorCamposVazios++;
+                }
+
+                // Remove a última vírgula e espaço
                 mensagemErro.setLength(mensagemErro.length() - 2);
-                mensagemErro.append(" estão vazios.");
+
+                if (contadorCamposVazios == 1) {
+                    mensagemErro.insert(0, "O campo ");
+                    mensagemErro.append(" está vazio");
+                } else {
+                    mensagemErro.insert(0, "Os campos ");
+                    mensagemErro.append(" estão vazios.");
+                }
 
                 exibirMensagemToast(mensagemErro.toString());
                 return estaVazio;
